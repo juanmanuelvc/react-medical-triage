@@ -1,7 +1,7 @@
 # CLAUDE.md — react-medical-triage
 
-Medical pre-triage assistant using a ReAct agent loop.
-See `PLAN.md` for the phase-by-phase plan. See `STATUS.md` for current progress.
+Medical pre-triage assistant for private clinics using a ReAct agent loop (no agent frameworks).
+See `PLAN.md` for the phase-by-phase implementation plan. See `STATUS.md` for current progress.
 
 **Stack:** FastAPI · LiteLLM · scispaCy · sentence-transformers · FAISS · SQLite · OpenTelemetry · Jaeger · React/Vite · Tailwind · Docker Compose · Kubernetes
 
@@ -97,12 +97,71 @@ Add blockers to the Blockers section. Keep under 50 lines. No prose — structur
 
 ---
 
+## LLM Configuration
+
+LiteLLM is the only permitted library for LLM calls (`litellm.acompletion()` — no wrappers).
+Configuration via environment variables — switch provider without touching code:
+
+| Variable | Local (vLLM) | Anthropic | Vertex AI |
+|---|---|---|---|
+| `LLM_MODEL` | `openai/qwen2.5-0.5B-Instruct` | `anthropic/claude-sonnet-4-6` | `vertex_ai/gemini-1.5-pro` |
+| `LLM_API_BASE` | `http://localhost:8080/v1` | _(empty)_ | _(empty)_ |
+| `LLM_API_KEY` | _(empty)_ | your key | your key |
+
+---
+
+## Code Style
+
+- Explicit over clever. Descriptive names; no abbreviations.
+- Types/annotations required on all public backend functions.
+- No comments unless logic is non-obvious.
+- Minimum necessary complexity — three similar lines beats a premature abstraction.
+- No error handling for impossible cases; no features beyond what is requested.
+- No backwards-compatibility shims for code known to be unused.
+
+---
+
 ## Project Constraints
 
-- Read files before modifying them.
-- Prefer editing existing files over creating new ones.
-- No comments unless logic is non-obvious.
-- No error handling for impossible cases.
-- No features beyond what is explicitly requested.
-- Backend public functions require type hints.
 - Every tool subclass must catch all exceptions and return `{"error": "<msg>"}` — never raise.
+- `react_loop.py` must not import any agent framework — pure Python + LiteLLM only.
+- Every `litellm.acompletion()` call must be inside an OTel span.
+- Read files before modifying them. Prefer editing over creating new files.
+
+---
+
+## Agent Behaviour
+
+- Ask before large, destructive, or irreversible changes.
+- Use `ultrathink` for complex tasks or when self-reviewing changes.
+- When context reaches ~60%, warn and suggest `/handoff` before continuing.
+- On errors: show root cause before proposing a fix.
+- Never skip hooks (`--no-verify`) or force-push without explicit permission.
+
+---
+
+## Security
+
+- Never commit secrets, credentials, `.env` files, or tokens.
+- Validate at system boundaries (user input, external APIs); trust internal guarantees.
+- Do not introduce command injection, XSS, SQL injection, or other OWASP top-10 issues.
+
+---
+
+## Observability
+
+Each ReAct step = one OTel span. Required span attributes:
+`react.step_type` · `react.step_number` · `react.tool_name` · `llm.model` · `llm.tokens_prompt` · `llm.tokens_completion` · `llm.latency_ms`
+
+Full session trace must be navigable in Jaeger at `localhost:16686`.
+
+---
+
+## Available Skills
+
+- `.claude/commands/sdd-cycle.md` — spec → test → implement → refactor → quality gates → commit
+- `.claude/commands/worktree-start.md` — create branch + worktree
+- `.claude/commands/worktree-finish.md` — quality gates, commit, merge, cleanup
+- `.claude/commands/delegate.md` — parallel sub-tasks (up to 5 agents)
+- `~/.claude/skills/git-workflow/SKILL.md` — branch flow, semantic commits, PRs, conflicts
+- `~/.claude/skills/context-mgmt/SKILL.md` — when and how to compact / hand off context
