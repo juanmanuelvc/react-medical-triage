@@ -1,0 +1,162 @@
+[
+  {
+    "primary_symptom": "chest_pain",
+    "severity": "severe",
+    "urgency_level": 1,
+    "protocol_name": "Possible ACS — Emergency",
+    "referral_type": "emergency",
+    "rationale": "Severe chest pain may indicate acute myocardial infarction or other life-threatening cause. Immediate emergency transfer required."
+  },
+  {
+    "primary_symptom": "chest_pain",
+    "severity": "moderate",
+    "urgency_level": 2,
+    "protocol_name": "Chest Pain — Urgent Cardiac Assessment",
+    "referral_type": "urgent_cardiology",
+    "rationale": "Moderate chest pain warrants same-day cardiac evaluation to exclude unstable angina or PE."
+  },
+  {
+    "primary_symptom": "chest_pain",
+    "severity": "mild",
+    "urgency_level": 3,
+    "protocol_name": "Chest Pain — Routine Cardiac Referral",
+    "referral_type": "cardiology_outpatient",
+    "rationale": "Mild, atypical chest pain without red flags can be assessed in outpatient cardiology within 2 weeks."
+  },
+  {
+    "primary_symptom": "dyspnea",
+    "severity": "severe",
+    "urgency_level": 1,
+    "protocol_name": "Acute Respiratory Failure — Emergency",
+    "referral_type": "emergency",
+    "rationale": "Severe breathlessness with hypoxia requires immediate emergency assessment and potential ventilatory support."
+  },
+  {
+    "primary_symptom": "dyspnea",
+    "severity": "moderate",
+    "urgency_level": 2,
+    "protocol_name": "Respiratory Distress — Same-Day Assessment",
+    "referral_type": "urgent_respiratory",
+    "rationale": "Moderate dyspnea requires same-day evaluation to exclude cardiac failure, PE, or severe asthma."
+  },
+  {
+    "primary_symptom": "dyspnea",
+    "severity": "mild",
+    "urgency_level": 3,
+    "protocol_name": "Dyspnea — Routine Respiratory Review",
+    "referral_type": "gp_or_respiratory_outpatient",
+    "rationale": "Mild breathlessness without acute features can be assessed within 48 hours with spirometry and CXR."
+  },
+  {
+    "primary_symptom": "headache",
+    "severity": "severe",
+    "urgency_level": 1,
+    "protocol_name": "Thunderclap Headache — Emergency Neurology",
+    "referral_type": "emergency",
+    "rationale": "Sudden severe headache may indicate subarachnoid haemorrhage or other intracranial emergency. CT head required urgently."
+  },
+  {
+    "primary_symptom": "headache",
+    "severity": "moderate",
+    "urgency_level": 2,
+    "protocol_name": "Headache with Red Flags — Urgent Neurology",
+    "referral_type": "urgent_neurology",
+    "rationale": "Moderate headache with fever, neck stiffness, or focal signs requires same-day neurological assessment."
+  },
+  {
+    "primary_symptom": "headache",
+    "severity": "mild",
+    "urgency_level": 4,
+    "protocol_name": "Tension / Migraine — Self-Care",
+    "referral_type": "self_care",
+    "rationale": "Mild headache consistent with tension-type or migraine without red flags can be managed with analgesia and self-care advice."
+  },
+  {
+    "primary_symptom": "fever",
+    "severity": "severe",
+    "urgency_level": 1,
+    "protocol_name": "Suspected Sepsis — Emergency",
+    "referral_type": "emergency",
+    "rationale": "High fever with systemic compromise meets sepsis criteria. Immediate IV antibiotics and emergency hospitalisation required."
+  },
+  {
+    "primary_symptom": "fever",
+    "severity": "moderate",
+    "urgency_level": 2,
+    "protocol_name": "Fever — Same-Day GP Assessment",
+    "referral_type": "urgent_gp",
+    "rationale": "Moderate fever with systemic symptoms requires same-day assessment to exclude serious bacterial infection."
+  },
+  {
+    "primary_symptom": "fever",
+    "severity": "mild",
+    "urgency_level": 4,
+    "protocol_name": "Uncomplicated Fever — Self-Care",
+    "referral_type": "self_care",
+    "rationale": "Mild fever in adults without red flags is likely viral. Manage with paracetamol, fluids, and rest. Return if not improving in 5 days."
+  },
+  {
+    "primary_symptom": "abdominal_pain",
+    "severity": "severe",
+    "urgency_level": 1,
+    "protocol_name": "Acute Abdomen — Emergency Surgery",
+    "referral_type": "emergency",
+    "rationale": "Severe abdominal pain with guarding may indicate peritonitis, perforation, or ischaemia. Immediate surgical assessment required."
+  },
+  {
+    "primary_symptom": "abdominal_pain",
+    "severity": "moderate",
+    "urgency_level": 2,
+    "protocol_name": "Abdominal Pain — Urgent Surgical Review",
+    "referral_type": "urgent_surgery_or_gp",
+    "rationale": "Moderate abdominal pain with localising signs requires same-day assessment to exclude appendicitis, cholecystitis, or obstruction."
+  },
+  {
+    "primary_symptom": "abdominal_pain",
+    "severity": "mild",
+    "urgency_level": 3,
+    "protocol_name": "Abdominal Pain — Routine Assessment",
+    "referral_type": "gp_within_48h",
+    "rationale": "Mild abdominal pain without alarm features can be assessed within 48 hours. Advise patient to return if pain worsens."
+  },
+  {
+    "primary_symptom": "neurological_deficit",
+    "severity": "severe",
+    "urgency_level": 1,
+    "protocol_name": "Stroke — Emergency Thrombolysis Pathway",
+    "referral_type": "emergency",
+    "rationale": "Acute focal neurological deficit may indicate stroke. Thrombolysis window is 4.5 hours. Immediate emergency transfer."
+  },
+  {
+    "primary_symptom": "neurological_deficit",
+    "severity": "moderate",
+    "urgency_level": 2,
+    "protocol_name": "TIA — Same-Day Specialist Assessment",
+    "referral_type": "urgent_neurology_or_tia_clinic",
+    "rationale": "Resolved neurological deficit consistent with TIA requires assessment within 24 hours to prevent recurrent stroke."
+  },
+  {
+    "primary_symptom": "rash",
+    "severity": "severe",
+    "urgency_level": 1,
+    "protocol_name": "Non-Blanching Rash — Emergency",
+    "referral_type": "emergency",
+    "rationale": "Non-blanching petechial rash in febrile patient requires immediate benzylpenicillin and emergency transfer for suspected meningococcal disease."
+  },
+  {
+    "primary_symptom": "rash",
+    "severity": "moderate",
+    "urgency_level": 3,
+    "protocol_name": "Rash — GP Assessment",
+    "referral_type": "gp_within_48h",
+    "rationale": "Blanching rash without systemic features can be assessed within 48 hours for diagnosis and treatment."
+  },
+  {
+    "primary_symptom": "trauma",
+    "severity": "severe",
+    "urgency_level": 1,
+    "protocol_name": "Major Trauma — Emergency",
+    "referral_type": "emergency",
+    "rationale": "Significant trauma with haemodynamic instability, head injury with GCS drop, or suspected spinal injury requires immediate emergency transfer."
+  }
+]
