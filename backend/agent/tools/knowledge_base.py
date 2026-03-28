@@ -79,7 +79,7 @@ class KnowledgeBaseTool(Tool):
             top_k = min(top_k, len(self._documents))
             query_embedding = self._model.encode([query], convert_to_numpy=True)
             query_embedding = np.array(query_embedding, dtype=np.float32)
-            _, indices = self._index.search(query_embedding, top_k)  # type: ignore[call-arg]
+            _, indices = self._index.search(query_embedding, top_k)
             results = [
                 {
                     "id": self._documents[i]["id"],
