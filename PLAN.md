@@ -115,12 +115,12 @@ Files:
 **Goal:** Minimal React UI that streams and renders the ReAct chain-of-thought in real time.
 
 Files:
-- `frontend/src/api.js` — `startTriage(text)` opens SSE connection via `fetch` + `ReadableStream`
-- `frontend/src/components/SymptomInput.jsx` — textarea + submit button
-- `frontend/src/components/ReActTrace.jsx` — renders steps as they arrive: step-type badge (think/act/observe), reasoning text, collapsible tool call/result
-- `frontend/src/components/Recommendation.jsx` — final urgency level (color-coded), confidence bar, red flags list
-- `frontend/src/App.jsx` — composes the three components, manages SSE lifecycle
-- `frontend/package.json` — Vite + React, Tailwind CSS. No component frameworks.
+- `frontend/src/api.ts` — `startTriage(text)` opens SSE connection via `fetch` + `ReadableStream`
+- `frontend/src/components/SymptomInput.tsx` — textarea + submit button
+- `frontend/src/components/ReActTrace.tsx` — renders steps as they arrive: step-type badge (think/act/observe), reasoning text, collapsible tool call/result
+- `frontend/src/components/Recommendation.tsx` — final urgency level (color-coded), confidence bar, red flags list
+- `frontend/src/App.tsx` — composes the three components, manages SSE lifecycle
+- `frontend/package.json` — Vite + React + TypeScript, Tailwind CSS. No component frameworks.
 
 ---
 
