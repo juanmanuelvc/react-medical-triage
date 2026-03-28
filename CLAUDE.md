@@ -37,13 +37,12 @@ just k8s-apply     # kubectl apply -f infra/k8s/
 
 ## Git Workflow
 
-**Branch model (git flow):**
-- `main` — protected, production-ready only
-- `development` — protected, integration branch
-- `feat/<scope>/<slug>` — feature branches from `development`
+**Branch model (trunk-based):**
+- `main` — trunk, always deployable; all PRs target this branch
+- `feat/<scope>/<slug>` — short-lived feature branches from `main`
 - `feat/<scope>/<slug>/<subtask>` — sub-branches for parallel work
 
-Never commit directly to `main` or `development`. Use `/worktree-start` to create branches and worktrees.
+Never commit directly to `main`. Use `/worktree-start` to create branches and worktrees.
 
 **Conventional Commits:** `<type>(<scope>): <description>`
 
