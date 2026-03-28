@@ -1,0 +1,252 @@
+[
+  {
+    "id": "doc_001",
+    "title": "Chest Pain — Acute Myocardial Infarction",
+    "content": "Acute myocardial infarction (AMI) presents with crushing chest pain radiating to the left arm or jaw, diaphoresis, nausea, and shortness of breath. Pain is typically >20 minutes and not relieved by nitrates. Associated symptoms include pallor, cold sweats, and a sense of impending doom. Immediate emergency referral is required. Administer aspirin 300 mg if not contraindicated. Do not delay transfer for investigations."
+  },
+  {
+    "id": "doc_002",
+    "title": "Chest Pain — Stable Angina",
+    "content": "Stable angina presents as exertional chest tightness or pressure, typically relieved within 5 minutes by rest or sublingual nitrates. Pain may radiate to the left arm or jaw. Episodes are predictable and triggered by physical or emotional stress. Resting ECG is often normal. Refer to cardiology for stress testing and risk stratification. Urgent same-day assessment if frequency has increased or pattern has changed."
+  },
+  {
+    "id": "doc_003",
+    "title": "Chest Pain — Pulmonary Embolism",
+    "content": "Pulmonary embolism (PE) presents with sudden-onset pleuritic chest pain, dyspnea, tachycardia, and occasionally haemoptysis. Risk factors include recent immobilisation, surgery, malignancy, oral contraceptives, and prior DVT. Signs include tachycardia, low O2 saturation, and unilateral leg swelling. Wells score helps stratify risk. Suspected PE requires urgent emergency assessment. Do not delay anticoagulation if clinical suspicion is high."
+  },
+  {
+    "id": "doc_004",
+    "title": "Chest Pain — Musculoskeletal / Costochondritis",
+    "content": "Musculoskeletal chest pain is reproducible on palpation of the chest wall, worsens with movement or deep inspiration, and is typically localised. Costochondritis involves tenderness at the costochondral junctions. No associated diaphoresis or radiation. Managed with NSAIDs and reassurance. Cardiac and pulmonary causes must be excluded before attributing chest pain to a musculoskeletal origin."
+  },
+  {
+    "id": "doc_005",
+    "title": "Dyspnea — Acute Asthma Exacerbation",
+    "content": "Acute asthma presents with wheeze, chest tightness, cough, and shortness of breath. Severity is assessed by peak flow, respiratory rate, accessory muscle use, and ability to speak. Life-threatening features include silent chest, cyanosis, bradycardia, and exhaustion. Treat with salbutamol nebulisation and oral prednisolone. Severe or life-threatening asthma requires emergency hospitalisation."
+  },
+  {
+    "id": "doc_006",
+    "title": "Dyspnea — Acute Heart Failure / Pulmonary Oedema",
+    "content": "Acute heart failure presents with orthopnoea, paroxysmal nocturnal dyspnea, bilateral leg oedema, and basal crepitations on auscultation. Patients may be distressed and hypoxic. Risk factors include hypertension, ischaemic heart disease, and valvular disease. Requires urgent emergency referral. Treatment includes oxygen, IV diuretics, and sitting the patient upright."
+  },
+  {
+    "id": "doc_007",
+    "title": "Dyspnea — Pneumonia",
+    "content": "Pneumonia presents with productive cough, fever, pleuritic chest pain, dyspnea, and localised crackles on auscultation. Severity assessed using the CRB-65 score (confusion, respiratory rate ≥30, systolic BP <90, age ≥65). Score 0: home treatment with oral antibiotics. Score 1–2: consider hospital admission. Score ≥3: urgent hospital admission. Community-acquired pneumonia is most commonly caused by Streptococcus pneumoniae."
+  },
+  {
+    "id": "doc_008",
+    "title": "Headache — Subarachnoid Haemorrhage",
+    "content": "Subarachnoid haemorrhage (SAH) classically presents as a thunderclap headache — sudden onset, reaching maximum intensity within seconds, described as 'the worst headache of my life'. May be associated with neck stiffness, photophobia, vomiting, and brief loss of consciousness. Requires immediate emergency assessment. CT head is the first-line investigation; LP is performed if CT is negative but clinical suspicion remains high."
+  },
+  {
+    "id": "doc_009",
+    "title": "Headache — Tension-Type Headache",
+    "content": "Tension-type headache is characterised by bilateral, pressing or tightening pain of mild to moderate intensity, lasting 30 minutes to 7 days. Not aggravated by routine physical activity. No nausea or vomiting, and not more than one of photophobia or phonophobia. Management includes simple analgesia (paracetamol, ibuprofen), stress management, and sleep hygiene. No red flags present."
+  },
+  {
+    "id": "doc_010",
+    "title": "Headache — Migraine",
+    "content": "Migraine presents as unilateral, pulsating, moderate-to-severe headache, lasting 4–72 hours, aggravated by routine activity, associated with nausea or vomiting and/or photophobia and phonophobia. Aura may precede the headache. Acute treatment includes triptans, NSAIDs, and antiemetics. Red flags requiring investigation: new headache in patients >50, onset with exertion, focal neurological signs, fever, or progressive course."
+  },
+  {
+    "id": "doc_011",
+    "title": "Headache — Meningitis",
+    "content": "Bacterial meningitis presents with fever, severe headache, neck stiffness (meningism), and photophobia. Non-blanching petechial or purpuric rash suggests meningococcal disease. Kernig's and Brudzinski's signs may be positive. Requires immediate emergency transfer. Do not delay antibiotics for LP. Administer benzylpenicillin immediately if meningococcal disease is suspected."
+  },
+  {
+    "id": "doc_012",
+    "title": "Fever — Adult Sepsis",
+    "content": "Sepsis presents with fever or hypothermia, tachycardia, tachypnea, and signs of organ dysfunction. The Sepsis-3 criteria use SOFA score increase ≥2. qSOFA (confusion, respiratory rate ≥22, systolic BP ≤100) identifies high-risk patients outside ICU. Sepsis requires immediate IV access, blood cultures, lactate, and antibiotics within 1 hour. Emergency hospitalisation is mandatory."
+  },
+  {
+    "id": "doc_013",
+    "title": "Fever — Uncomplicated Adult",
+    "content": "Uncomplicated fever in adults is most commonly viral in origin. Assess for localising symptoms: cough, dysuria, throat pain, rash, or lymphadenopathy. Duration under 5 days with no alarming signs can be managed with paracetamol and rest. Persistent fever >5 days, temperature >39.5°C, or associated rigors warrants further investigation including FBC, CRP, and urine culture."
+  },
+  {
+    "id": "doc_014",
+    "title": "Fever — Paediatric (6 months to 5 years)",
+    "content": "Fever in children aged 6 months to 5 years is managed using the NICE traffic-light system. Green: well-looking child, normal colour, no respiratory distress. Amber: pallor, tachycardia, nasal flaring, reduced activity. Red: pale/mottled/ashen/blue, no response to social cues, grunting, non-blanching rash. Amber features require same-day assessment; red features require immediate emergency referral."
+  },
+  {
+    "id": "doc_015",
+    "title": "Fever — Febrile Seizure in Children",
+    "content": "Simple febrile seizures are generalised, last <15 minutes, and do not recur within 24 hours. Most commonly occur in children aged 6 months to 5 years with fever. After the seizure, assess for signs of meningitis and examine for source of fever. Simple febrile seizures do not require hospital admission if the child recovers fully and no meningism is present. Advise parents on fever management and when to return."
+  },
+  {
+    "id": "doc_016",
+    "title": "Abdominal Pain — Appendicitis",
+    "content": "Appendicitis classically presents with periumbilical pain migrating to the right iliac fossa, fever, nausea, anorexia, and tenderness at McBurney's point. Rebound tenderness and guarding suggest peritonism. Alvarado score aids diagnosis. Suspected appendicitis requires urgent surgical assessment. Delay in treatment risks perforation and peritonitis. CT or ultrasound is used when diagnosis is uncertain."
+  },
+  {
+    "id": "doc_017",
+    "title": "Abdominal Pain — Biliary Colic and Cholecystitis",
+    "content": "Biliary colic presents as severe right upper quadrant or epigastric pain, often postprandial, radiating to the right shoulder. Episodes last 30 minutes to several hours. Acute cholecystitis adds fever, localised tenderness, and a positive Murphy's sign. Cholecystitis requires hospital admission for IV antibiotics and surgical review. Biliary colic without inflammation can be managed with analgesia and elective surgical referral."
+  },
+  {
+    "id": "doc_018",
+    "title": "Abdominal Pain — Bowel Obstruction",
+    "content": "Small bowel obstruction presents with colicky central abdominal pain, vomiting, abdominal distension, and absolute constipation (no flatus or stool). Auscultation may reveal tinkling bowel sounds. Abdominal X-ray shows dilated loops of bowel. Requires urgent surgical assessment. IV fluids, nasogastric tube for decompression, and NBM are initial measures. Strangulation is a surgical emergency."
+  },
+  {
+    "id": "doc_019",
+    "title": "Abdominal Pain — Irritable Bowel Syndrome",
+    "content": "Irritable bowel syndrome (IBS) is characterised by chronic abdominal pain associated with altered bowel habits (diarrhoea, constipation, or alternating) in the absence of organic pathology. Diagnosis requires meeting Rome IV criteria. Red flags include rectal bleeding, nocturnal symptoms, weight loss, and age >50 at first presentation. Managed with dietary advice, soluble fibre, antispasmodics, and psychological support."
+  },
+  {
+    "id": "doc_020",
+    "title": "Abdominal Pain — Urinary Tract Infection",
+    "content": "Lower urinary tract infection (cystitis) presents with dysuria, frequency, urgency, and suprapubic discomfort. In women, empirical treatment with trimethoprim or nitrofurantoin is appropriate after urine dipstick. In men, recurrent UTIs require urological investigation. Pyelonephritis adds fever, rigors, loin pain, and vomiting; requires urine culture and may need IV antibiotics. Complicated UTI (pregnancy, diabetes, renal impairment) needs specialist review."
+  },
+  {
+    "id": "doc_021",
+    "title": "Abdominal Pain — Renal Colic",
+    "content": "Renal colic presents with severe, colicky loin-to-groin pain, haematuria, and restlessness. The pain is typically not relieved by positional change. Nausea and vomiting are common. Diagnosis is confirmed by CT KUB or ultrasound. Initial management includes IV/IM diclofenac or morphine. Most stones <5 mm pass spontaneously. Stones causing obstruction, infection, or renal impairment require urgent urological intervention."
+  },
+  {
+    "id": "doc_022",
+    "title": "Neurological — Stroke / TIA",
+    "content": "Stroke and TIA present with sudden-onset neurological deficit: facial droop, arm weakness, speech disturbance (FAST criteria), vision loss, or severe headache. TIA symptoms resolve within 24 hours but carry high short-term stroke risk. ABCD2 score stratifies TIA risk. Suspected stroke requires immediate emergency transfer for thrombolysis within 4.5 hours of onset. TIA with ABCD2 ≥4 requires hospital assessment within 24 hours."
+  },
+  {
+    "id": "doc_023",
+    "title": "Neurological — Seizure / Epilepsy",
+    "content": "First seizure requires urgent assessment to exclude structural cause, metabolic disturbance, and CNS infection. Status epilepticus (>5 minutes or two seizures without recovery) is a medical emergency: secure airway, IV lorazepam, and emergency transfer. Known epilepsy with single breakthrough seizure and full recovery can be assessed urgently rather than emergently. Advise patient not to drive until assessed by neurologist."
+  },
+  {
+    "id": "doc_024",
+    "title": "Neurological — Vertigo",
+    "content": "Benign paroxysmal positional vertigo (BPPV) presents with brief episodes of vertigo triggered by head movement. Dix-Hallpike test is diagnostic. Managed with Epley manoeuvre. Acute vestibular neuritis causes prolonged vertigo, nausea, and vomiting without hearing loss. Red flags requiring urgent imaging: new headache, diplopia, dysphagia, ataxia, or focal neurological signs — these suggest posterior fossa pathology."
+  },
+  {
+    "id": "doc_025",
+    "title": "Dermatology — Anaphylaxis",
+    "content": "Anaphylaxis is a severe, life-threatening systemic hypersensitivity reaction. Features include urticaria, angioedema, bronchospasm, hypotension, and tachycardia following exposure to a trigger (food, drug, insect sting). Requires immediate IM adrenaline 0.5 mg (1:1000), oxygen, IV fluids, and emergency transfer. Antihistamines and steroids are adjuncts. Patient must be observed for biphasic reaction. Refer to allergy clinic and prescribe adrenaline auto-injector."
+  },
+  {
+    "id": "doc_026",
+    "title": "Dermatology — Cellulitis",
+    "content": "Cellulitis is a bacterial skin infection presenting with erythema, warmth, swelling, and tenderness, usually of the lower limbs. Systemic features (fever, tachycardia) indicate more severe infection. Lund criteria or Eron classification guides management. Mild cellulitis is treated with oral flucloxacillin or co-amoxiclav. Systemic features, facial cellulitis, or failure to respond to oral antibiotics requires hospital admission for IV antibiotics."
+  },
+  {
+    "id": "doc_027",
+    "title": "Dermatology — Non-blanching Rash",
+    "content": "A non-blanching petechial or purpuric rash in a febrile patient must be considered meningococcal septicaemia until proven otherwise. This is a medical emergency requiring immediate IM/IV benzylpenicillin and emergency transfer. Other causes of non-blanching rash include thrombocytopenia and vasculitis but these diagnoses are made by exclusion. Do not delay treatment for investigations."
+  },
+  {
+    "id": "doc_028",
+    "title": "ENT — Sore Throat / Tonsillitis",
+    "content": "Sore throat is most commonly viral. The FeverPAIN or Centor score assesses likelihood of group A streptococcal infection. FeverPAIN ≥4 or Centor ≥3: consider antibiotics (phenoxymethylpenicillin). Peritonsillar abscess (quinsy) presents with severe unilateral pain, trismus, uvular deviation, and muffled voice — requires emergency ENT assessment and drainage. Ludwig's angina is a rapidly spreading floor-of-mouth infection requiring emergency airway management."
+  },
+  {
+    "id": "doc_029",
+    "title": "ENT — Epistaxis",
+    "content": "Epistaxis (nosebleed) is usually from Little's area (anterior) and is managed with digital pressure, leaning forward, and vasoconstricting nasal spray. Posterior epistaxis is less common but more severe. Indications for hospital referral: haemodynamic compromise, anticoagulant use, failed primary care measures, or suspected posterior bleed. Recurrent epistaxis should prompt investigation for hypertension, coagulopathy, or nasal pathology."
+  },
+  {
+    "id": "doc_030",
+    "title": "Musculoskeletal — Acute Low Back Pain",
+    "content": "Acute non-specific low back pain is self-limiting in most patients. Red flags requiring urgent investigation: saddle anaesthesia, bilateral leg weakness, loss of bladder or bowel control (cauda equina syndrome — emergency MRI), fever with back pain (discitis), history of malignancy, age >50 with new onset, or recent significant trauma. Cauda equina syndrome is a surgical emergency. Non-specific back pain is managed with analgesia, mobilisation, and reassurance."
+  },
+  {
+    "id": "doc_031",
+    "title": "Musculoskeletal — Fracture Assessment",
+    "content": "Suspected fractures should be assessed for mechanism of injury, point tenderness, deformity, neurovascular compromise distal to the injury, and ability to weight-bear. Ottawa rules guide X-ray decisions for ankle and knee injuries. Open fractures and fractures with neurovascular compromise require emergency surgical assessment. Femoral neck fractures in the elderly require hospital admission. Undisplaced fractures may be managed with immobilisation and orthopaedic follow-up."
+  },
+  {
+    "id": "doc_032",
+    "title": "Musculoskeletal — Septic Arthritis",
+    "content": "Septic arthritis presents with a hot, swollen, acutely painful joint with restricted movement, fever, and elevated inflammatory markers. It is a surgical emergency requiring joint aspiration for diagnosis, IV antibiotics, and orthopaedic washout. Most commonly affects the knee. Risk factors include immunosuppression, prosthetic joints, and IV drug use. Delay in treatment leads to irreversible joint destruction."
+  },
+  {
+    "id": "doc_033",
+    "title": "Ophthalmology — Acute Red Eye",
+    "content": "Acute red eye has multiple causes. Urgent referral to ophthalmology is required for: sudden vision loss, severe eye pain, corneal involvement, hypopyon, ciliary injection, and history of trauma or foreign body. Acute angle-closure glaucoma presents with severe eye pain, nausea, blurred vision, halos around lights, and a fixed mid-dilated pupil — ophthalmological emergency. Conjunctivitis is managed with topical antibiotics or antihistamines depending on aetiology."
+  },
+  {
+    "id": "doc_034",
+    "title": "Ophthalmology — Sudden Vision Loss",
+    "content": "Sudden painless monocular vision loss may indicate central retinal artery occlusion (CRAO), retinal vein occlusion, vitreous haemorrhage, or retinal detachment. CRAO is a stroke equivalent — ocular emergency requiring immediate ophthalmological assessment within 4.5 hours. Retinal detachment presents with flashes, floaters, and a curtain across the visual field — requires same-day ophthalmological review. Arrange emergency transfer immediately."
+  },
+  {
+    "id": "doc_035",
+    "title": "Endocrinology — Hypoglycaemia",
+    "content": "Hypoglycaemia (blood glucose <4 mmol/L) in diabetic patients presents with sweating, tremor, palpitations, hunger, confusion, and aggression. Conscious patients: 15–20 g fast-acting glucose (glucose tablets, fruit juice) repeated after 15 minutes if not improved. Unconscious or unable to swallow: IM glucagon 1 mg or IV glucose 75 mL 20% dextrose. Identify and address the cause. Review insulin or sulphonylurea doses. Recurrent hypoglycaemia requires diabetologist review."
+  },
+  {
+    "id": "doc_036",
+    "title": "Endocrinology — Diabetic Ketoacidosis",
+    "content": "Diabetic ketoacidosis (DKA) presents in type 1 diabetes with polyuria, polydipsia, nausea, vomiting, abdominal pain, and Kussmaul breathing. Diagnosis: glucose >11 mmol/L, ketones >3 mmol/L, pH <7.3. Requires emergency hospital admission for IV fluids, insulin infusion, and electrolyte monitoring. Precipitating causes include infection, insulin omission, and new diagnosis. Hypokalaemia is a serious complication of treatment."
+  },
+  {
+    "id": "doc_037",
+    "title": "Psychiatric — Acute Mental Health Crisis",
+    "content": "Acute mental health crisis may present with suicidal ideation, self-harm, severe agitation, psychosis, or acute behavioural disturbance. Assess risk using structured tool (PHQ-9 for depression, Columbia scale for suicide). Active suicidal intent with plan requires emergency psychiatric assessment. Psychosis with risk to self or others may require compulsory admission under mental health legislation. Ensure patient safety and do not leave unattended."
+  },
+  {
+    "id": "doc_038",
+    "title": "Psychiatric — Depression Screening",
+    "content": "Depression is screened with two questions: low mood and anhedonia over the past two weeks. PHQ-9 scores risk: mild (5–9), moderate (10–14), moderately severe (15–19), severe (20–27). Any active suicidal ideation requires same-day specialist review. Mild-to-moderate depression is treated with psychological therapy and/or antidepressants (SSRIs first-line). Severe depression warrants urgent psychiatric referral."
+  },
+  {
+    "id": "doc_039",
+    "title": "Gynaecology — Ectopic Pregnancy",
+    "content": "Ectopic pregnancy should be suspected in any woman of childbearing age with lower abdominal pain, missed period, and vaginal bleeding. A positive pregnancy test with these symptoms is an emergency until proven otherwise. Rupture presents with haemodynamic instability and peritonism — immediate surgical emergency. Confirm with serum beta-hCG and transvaginal ultrasound. Do not delay assessment while awaiting test results if the patient is haemodynamically unstable."
+  },
+  {
+    "id": "doc_040",
+    "title": "Gynaecology — Pelvic Inflammatory Disease",
+    "content": "Pelvic inflammatory disease (PID) presents with lower abdominal pain, fever, purulent vaginal discharge, cervical motion tenderness, and adnexal tenderness. Risk factors include multiple sexual partners, recent instrumentation, and previous STI. Oral antibiotics (doxycycline + metronidazole) for mild-to-moderate PID. Severe PID with systemic features requires hospital admission for IV antibiotics. Tubo-ovarian abscess is a complication requiring surgical drainage."
+  },
+  {
+    "id": "doc_041",
+    "title": "Paediatrics — Croup",
+    "content": "Croup (laryngotracheobronchitis) typically affects children 6 months to 3 years. Presents with a barking cough, stridor, and hoarseness, often worse at night. Severity assessment: mild (barking cough, no stridor at rest), moderate (stridor at rest with some sternal recession), severe (marked stridor, significant recession, fatigue). Treat moderate-to-severe croup with oral dexamethasone or nebulised budesonide. Severe croup with impending respiratory failure requires emergency admission and nebulised adrenaline."
+  },
+  {
+    "id": "doc_042",
+    "title": "Paediatrics — Bronchiolitis",
+    "content": "Bronchiolitis is the most common lower respiratory infection in infants under 12 months, usually caused by RSV. Presents with coryzal prodrome followed by wheeze, cough, and respiratory distress. Severity indicators requiring hospital admission: feeding <50% normal, respiratory rate >70, persistent oxygen saturation <92%, apnoeas, or age under 6 weeks. Treatment is supportive — high-flow oxygen and nasogastric feeds if required. Bronchodilators are not routinely recommended."
+  },
+  {
+    "id": "doc_043",
+    "title": "Paediatrics — Meningitis in Children",
+    "content": "Meningitis in children may present without classic signs in infants. Under 18 months: bulging fontanelle, high-pitched cry, poor feeding, photophobia, and irritability when held. Older children: headache, neck stiffness, photophobia, and non-blanching rash. Immediate IM benzylpenicillin and emergency transfer. Do not delay for investigations. Viral meningitis is milder but requires hospital assessment for lumbar puncture to exclude bacterial cause."
+  },
+  {
+    "id": "doc_044",
+    "title": "Paediatrics — Intussusception",
+    "content": "Intussusception typically occurs in children 3 months to 3 years. Presents with intermittent, severe, colicky abdominal pain causing the child to draw up their legs, vomiting, and redcurrant jelly stool (blood and mucus, a late sign). Child may appear well between episodes. Diagnosis by ultrasound. Treatment by air enema reduction. If reduction fails or perforation is suspected, surgical intervention is required. Early diagnosis is essential."
+  },
+  {
+    "id": "doc_045",
+    "title": "Cardiovascular — Hypertensive Emergency",
+    "content": "Hypertensive emergency is BP >180/120 mmHg with acute end-organ damage: hypertensive encephalopathy, acute coronary syndrome, acute LV failure, aortic dissection, or eclampsia. Requires emergency treatment and hospital admission. Hypertensive urgency (BP >180/120 without organ damage) can be managed with oral antihypertensives and urgent outpatient review. Avoid rapid BP reduction in stroke — target 15% reduction over 24 hours unless BP >220/120."
+  },
+  {
+    "id": "doc_046",
+    "title": "Cardiovascular — Aortic Dissection",
+    "content": "Aortic dissection presents with sudden, severe, tearing or ripping chest or back pain radiating to the interscapular region. Unequal pulses and BP differential between arms. Type A (ascending aorta) requires emergency surgery. Type B (descending aorta) managed medically with IV beta-blockers to reduce BP and heart rate. CT aortogram is the investigation of choice. Immediately life-threatening — do not delay emergency transfer."
+  },
+  {
+    "id": "doc_047",
+    "title": "Respiratory — COPD Exacerbation",
+    "content": "COPD exacerbation presents with worsening dyspnea, increased sputum production, and change in sputum colour. Assess severity: mild (treated at home), moderate (hospital assessment), severe (immediate emergency). Avoid high-flow oxygen — target SpO2 88–92% to prevent hypercapnic drive suppression. Treat with controlled oxygen, bronchodilators, systemic steroids, and antibiotics if infective exacerbation. Non-invasive ventilation for respiratory failure."
+  },
+  {
+    "id": "doc_048",
+    "title": "Gastroenterology — Upper GI Bleed",
+    "content": "Upper GI bleeding presents with haematemesis or melaena. Resuscitate with IV fluids and blood products. Glasgow-Blatchford score assesses need for intervention. Score ≥1 requires hospital admission. IV proton pump inhibitor, Terlipressin if variceal bleed suspected, and urgent endoscopy within 24 hours (or emergency if haemodynamically unstable). Assess for medication causes (NSAIDs, anticoagulants). Do not give oral fluids to patients awaiting endoscopy."
+  },
+  {
+    "id": "doc_049",
+    "title": "Gastroenterology — Acute Liver Failure",
+    "content": "Acute liver failure presents with jaundice, coagulopathy (INR >1.5), and encephalopathy in the absence of pre-existing liver disease. Common causes include paracetamol overdose, viral hepatitis, and drug reactions. Paracetamol overdose: N-acetylcysteine within 8 hours of ingestion. Requires urgent specialist hepatology and transplant centre assessment. Complications include cerebral oedema, sepsis, and renal failure. ICU care is often required."
+  },
+  {
+    "id": "doc_050",
+    "title": "General — Syncope / Collapse",
+    "content": "Syncope is a transient loss of consciousness due to global cerebral hypoperfusion with spontaneous recovery. Vasovagal syncope is the most common type — precipitated by pain, emotion, or prolonged standing. Cardiac syncope (arrhythmia or structural) carries higher mortality risk. Red flags: syncope during exercise, associated chest pain, no prodrome, family history of sudden death, or abnormal ECG. Cardiac syncope requires urgent ECG, monitoring, and cardiological assessment."
+  }
+]
