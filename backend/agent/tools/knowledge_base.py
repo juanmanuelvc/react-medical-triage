@@ -87,7 +87,7 @@ class KnowledgeBaseTool(Tool):
                     "content": self._documents[i]["content"],
                 }
                 for i in indices[0]
-                if i < len(self._documents)
+                if i >= 0
             ]
             return {"results": results}
         except Exception as exc:
