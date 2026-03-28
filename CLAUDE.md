@@ -1,3 +1,4 @@
+[//]: # (template-version: v0.3.0)
 # CLAUDE.md — react-medical-triage
 
 Medical pre-triage assistant for private clinics using a ReAct agent loop (no agent frameworks).
@@ -57,6 +58,7 @@ Example: `feat(tools): add symptom NER tool using scispaCy`
 - Commits are atomic by logical unit, following SDD+TDD order: spec → test → impl.
 - Commit messages are single-line, max 72 characters. No body, no co-author lines.
 - Stage files by name — never `git add -A` or `git add .`.
+- Review `git diff --staged` before committing.
 - Never commit `.env` or credentials.
 - Never push — the user reviews and pushes manually.
 - After every commit sequence, `/worktree-finish` prints a summary table automatically.
@@ -114,6 +116,7 @@ Configuration via environment variables — switch provider without touching cod
 
 - Explicit over clever. Descriptive names; no abbreviations.
 - Types/annotations required on all public backend functions.
+- Write tests before or alongside new logic.
 - No comments unless logic is non-obvious.
 - Minimum necessary complexity — three similar lines beats a premature abstraction.
 - No error handling for impossible cases; no features beyond what is requested.
@@ -135,8 +138,10 @@ Configuration via environment variables — switch provider without touching cod
 - Ask before large, destructive, or irreversible changes.
 - Use `ultrathink` for complex tasks or when self-reviewing changes.
 - When context reaches ~60%, warn and suggest `/handoff` before continuing.
+- Prefer concise, direct explanations — skip filler phrases.
 - On errors: show root cause before proposing a fix.
 - Never skip hooks (`--no-verify`) or force-push without explicit permission.
+- When all tasks for a branch are complete, remind the user about `/pr-preview`.
 
 ---
 
@@ -159,9 +164,17 @@ Full session trace must be navigable in Jaeger at `localhost:16686`.
 
 ## Available Skills
 
-- `.claude/commands/sdd-cycle.md` — spec → test → implement → refactor → quality gates → commit
-- `.claude/commands/worktree-start.md` — create branch + worktree
-- `.claude/commands/worktree-finish.md` — quality gates, commit, merge, cleanup
-- `.claude/commands/delegate.md` — parallel sub-tasks (up to 5 agents)
-- `~/.claude/skills/git-workflow/SKILL.md` — branch flow, semantic commits, PRs, conflicts
-- `~/.claude/skills/context-mgmt/SKILL.md` — when and how to compact / hand off context
+<!-- Scan this list at the start of any non-trivial task and load relevant skills before acting. -->
+
+| Skill | When to load |
+|---|---|
+| `.claude/commands/sdd-cycle.md` | spec → test → implement → refactor → quality gates → commit |
+| `.claude/commands/worktree-start.md` | create branch + worktree |
+| `.claude/commands/worktree-finish.md` | quality gates, commit, merge, cleanup |
+| `.claude/commands/delegate.md` | parallel sub-tasks (up to 5 agents) |
+| `~/.claude/skills/git-workflow/SKILL.md` | Any git operation: branch, PR, merge, rebase, conflict |
+| `~/.claude/skills/quality-gates/SKILL.md` | Before committing or opening a PR — runs tests, linter, type-checker |
+| `~/.claude/skills/tdd/SKILL.md` | Writing new logic, fixing bugs, adding or modifying tests |
+| `~/.claude/skills/open-pr/SKILL.md` | Only when the user explicitly asks to open a PR — never proactively |
+| `~/.claude/skills/versioning/SKILL.md` | Bumping versions, generating changelogs with git-cliff, tagging releases |
+| `~/.claude/skills/context-mgmt/SKILL.md` | Context bar ~60%, before `/compact` or `/clear`, delegating to sub-agents |
