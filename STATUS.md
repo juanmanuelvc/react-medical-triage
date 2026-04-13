@@ -1,12 +1,12 @@
 # STATUS.md
 
 ## Current Phase
-Phase 2 — ReAct loop
+Phase 3 — FastAPI + Schemas + Session persistence
 
 ## Phases
 
 - [x] Phase 1 — Project skeleton + Tool implementations
-- [ ] Phase 2 — ReAct loop
+- [x] Phase 2 — ReAct loop
 - [ ] Phase 3 — FastAPI + Schemas + Session persistence
 - [ ] Phase 4 — OpenTelemetry + Docker Compose
 - [ ] Phase 5 — Frontend
@@ -29,6 +29,9 @@ Phase 2 — ReAct loop
 - [x] Assemble TOOL_REGISTRY from all tool instances
 - [x] Unit tests for all tools (34 tests passing)
 - [x] Switch branch model to trunk-based development
+- [x] Implement SYSTEM_PROMPT in prompts.py
+- [x] Implement ReActStep, TriageResult dataclasses and run_triage() in react_loop.py
+- [x] Unit tests for react loop (7 tests, all mocked)
 
 ## Blockers
 
