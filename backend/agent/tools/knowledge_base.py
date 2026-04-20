@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+# faiss-cpu 1.13.2 (latest) emits DeprecationWarning about missing __module__ on SWIG
+# types under Python 3.12. This is a known upstream issue with no fix released yet.
 import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
