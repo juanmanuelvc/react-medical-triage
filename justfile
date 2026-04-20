@@ -25,3 +25,14 @@ eval:
 
 k8s-apply:
     kubectl apply -f infra/k8s/
+
+format:
+    cd backend && uv run ruff format .
+
+install:
+    cd backend && uv sync
+
+clean:
+    find . -type d -name "__pycache__" -not -path "./.venv/*" -exec rm -rf {} +
+    find . -type d -name ".pytest_cache" -not -path "./.venv/*" -exec rm -rf {} +
+    find . -type f -name "*.pyc" -not -path "./.venv/*" -delete
