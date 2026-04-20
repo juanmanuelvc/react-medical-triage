@@ -1,5 +1,4 @@
 import json
-import os
 import time
 from dataclasses import dataclass
 from typing import Any
@@ -8,10 +7,7 @@ import litellm
 
 from agent.prompts import SYSTEM_PROMPT
 from agent.tools import TOOL_REGISTRY
-
-LLM_MODEL: str = os.getenv("LLM_MODEL", "openai/qwen2.5-0.5B-Instruct")
-LLM_API_BASE: str | None = os.getenv("LLM_API_BASE")
-LLM_API_KEY: str | None = os.getenv("LLM_API_KEY")
+from core.config import settings
 
 MAX_STEPS: int = 10
 
@@ -111,12 +107,12 @@ async def run_triage(symptoms_text: str, session_id: str) -> TriageResult:
         t0 = time.monotonic()
         # TODO(tracing): wrap in OTel span with react.step_number=step_num
         response: litellm.ModelResponse = await litellm.acompletion(  # type: ignore[assignment]
-            model=LLM_MODEL,
+            model=settings.llm_model,
             messages=messages,
             tools=all_tools,
             tool_choice="auto",
-            api_base=LLM_API_BASE,
-            api_key=LLM_API_KEY,
+            api_base=settings.llm_api_base,
+            api_key=settings.llm_api_key,
         )
         latency_ms = (time.monotonic() - t0) * 1000
 
