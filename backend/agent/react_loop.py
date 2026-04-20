@@ -74,6 +74,7 @@ class ReActStep:
     reasoning: str | None
     tokens_prompt: int
     tokens_completion: int
+    tokens_cached: int
     latency_ms: float
 
 
@@ -120,6 +121,11 @@ async def run_triage(symptoms_text: str, session_id: str) -> TriageResult:
         usage = response.usage  # type: ignore[attr-defined]
         tokens_prompt: int = usage.prompt_tokens if usage else 0
         tokens_completion: int = usage.completion_tokens if usage else 0
+        tokens_cached: int = (
+            (usage.prompt_tokens_details.cached_tokens or 0)
+            if usage and usage.prompt_tokens_details
+            else 0
+        )
 
         if not msg.tool_calls:
             steps.append(
@@ -132,6 +138,7 @@ async def run_triage(symptoms_text: str, session_id: str) -> TriageResult:
                     reasoning=msg.content,
                     tokens_prompt=tokens_prompt,
                     tokens_completion=tokens_completion,
+                    tokens_cached=tokens_cached,
                     latency_ms=latency_ms,
                 )
             )
@@ -172,6 +179,7 @@ async def run_triage(symptoms_text: str, session_id: str) -> TriageResult:
                         reasoning=None,
                         tokens_prompt=tokens_prompt,
                         tokens_completion=tokens_completion,
+                        tokens_cached=tokens_cached,
                         latency_ms=latency_ms,
                     )
                 )
@@ -200,6 +208,7 @@ async def run_triage(symptoms_text: str, session_id: str) -> TriageResult:
                     reasoning=None,
                     tokens_prompt=tokens_prompt,
                     tokens_completion=tokens_completion,
+                    tokens_cached=tokens_cached,
                     latency_ms=latency_ms,
                 )
             )

@@ -26,6 +26,7 @@ def _make_tool_call_response(
     usage = MagicMock()
     usage.prompt_tokens = prompt_tokens
     usage.completion_tokens = completion_tokens
+    usage.prompt_tokens_details = None
 
     response = MagicMock()
     response.choices = [MagicMock(message=msg)]
@@ -45,6 +46,7 @@ def _make_text_response(
     usage = MagicMock()
     usage.prompt_tokens = prompt_tokens
     usage.completion_tokens = completion_tokens
+    usage.prompt_tokens_details = None
 
     response = MagicMock()
     response.choices = [MagicMock(message=msg)]
@@ -184,3 +186,25 @@ async def test_run_triage_steps_have_timing() -> None:
         assert isinstance(step, ReActStep)
         assert isinstance(step.latency_ms, float)
         assert step.latency_ms >= 0.0
+
+
+async def test_run_triage_tokens_cached_from_prompt_tokens_details() -> None:
+    finish_resp = _make_finish_response()
+    cached_details = MagicMock()
+    cached_details.cached_tokens = 42
+    finish_resp.usage.prompt_tokens_details = cached_details
+
+    with patch("litellm.acompletion", new=AsyncMock(return_value=finish_resp)):
+        result = await run_triage("Chest pain.", "session-8")
+
+    assert result.steps[0].tokens_cached == 42
+
+
+async def test_run_triage_tokens_cached_defaults_to_zero_when_no_details() -> None:
+    finish_resp = _make_finish_response()
+    finish_resp.usage.prompt_tokens_details = None
+
+    with patch("litellm.acompletion", new=AsyncMock(return_value=finish_resp)):
+        result = await run_triage("Mild cough.", "session-9")
+
+    assert result.steps[0].tokens_cached == 0
