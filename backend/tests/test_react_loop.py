@@ -56,7 +56,7 @@ def _make_finish_response(
     urgency: str = "non_urgent",
     confidence: float = 0.9,
     recommendation: str = "See your GP within 48 hours.",
-    red_flags: list | None = None,
+    red_flags: list[str] | None = None,
     reasoning_summary: str = "No red flags found.",
 ) -> MagicMock:
     return _make_tool_call_response(

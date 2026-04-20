@@ -10,8 +10,8 @@ from agent.prompts import SYSTEM_PROMPT
 from agent.tools import TOOL_REGISTRY
 
 LLM_MODEL: str = os.getenv("LLM_MODEL", "openai/qwen2.5-0.5B-Instruct")
-LLM_API_BASE: str | None = os.getenv("LLM_API_BASE", None)
-LLM_API_KEY: str | None = os.getenv("LLM_API_KEY", None)
+LLM_API_BASE: str | None = os.getenv("LLM_API_BASE")
+LLM_API_KEY: str | None = os.getenv("LLM_API_KEY")
 
 MAX_STEPS: int = 10
 
