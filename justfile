@@ -26,7 +26,7 @@ eval:
 k8s-apply:
     kubectl apply -f infra/k8s/
 
-fmt:
+format:
     cd backend && uv run ruff format .
 
 install:
