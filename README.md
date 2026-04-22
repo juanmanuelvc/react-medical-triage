@@ -86,7 +86,7 @@ uv pip install <en_ner_bc5cdr_md wheel URL>
 **Run tests** (no LLM required — all mocked):
 
 ```bash
-just test-back   # 43 tests
+just test-back
 ```
 
 **Lint:**
