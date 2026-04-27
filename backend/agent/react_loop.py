@@ -67,7 +67,10 @@ _ESCALATION_RESULT_SUMMARY = "Agent did not call finish within the allowed numbe
 
 @dataclass
 class ReActStep:
-    """A single step produced by the ReAct loop — either a thought, a tool call, or the finish call."""
+    """A single step produced by the ReAct loop.
+
+    step_type is one of: ``"thought"``, ``"tool_call"``, ``"finish"``.
+    """
 
     step_number: int
     step_type: str  # "thought" | "tool_call" | "finish"
