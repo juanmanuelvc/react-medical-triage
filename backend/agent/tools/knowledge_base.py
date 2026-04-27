@@ -27,6 +27,13 @@ class KnowledgeBaseTool(Tool):
         model_name: str = _MODEL_NAME,
         top_k: int = _DEFAULT_TOP_K,
     ) -> None:
+        """Load corpus, embed all documents, and build the FAISS index.
+
+        Args:
+            corpus_path: Path to the JSON corpus file (list of ``{id, title, content}`` dicts).
+            model_name: sentence-transformers model name used for encoding.
+            top_k: Default number of results returned by ``execute``.
+        """
         self._top_k = top_k
         self._documents: list[dict[str, str]] = self._load_corpus(corpus_path)
         self._model = SentenceTransformer(model_name)
@@ -65,6 +72,7 @@ class KnowledgeBaseTool(Tool):
             return json.load(f)
 
     def _build_index(self) -> Any:
+        """Encode all corpus documents and build a FAISS flat L2 index over their embeddings."""
         texts = [f"{doc['title']}. {doc['content']}" for doc in self._documents]
         embeddings = self._model.encode(texts, convert_to_numpy=True)
         embeddings = np.array(embeddings, dtype=np.float32)

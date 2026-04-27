@@ -11,6 +11,11 @@ _DEFAULT_PROTOCOLS_PATH = (
 
 class TriageProtocolTool(Tool):
     def __init__(self, protocols_path: Path = _DEFAULT_PROTOCOLS_PATH) -> None:
+        """Load triage protocols and index them by (primary_symptom, severity) for O(1) lookup.
+
+        Args:
+            protocols_path: Path to the JSON protocols file.
+        """
         with protocols_path.open() as f:
             protocols: list[dict[str, Any]] = json.load(f)
         self._index: dict[tuple[str, str], dict[str, Any]] = {

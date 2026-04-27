@@ -22,6 +22,7 @@ See `PLAN.md` for the phase-by-phase implementation plan. See `STATUS.md` for cu
 
 ```
 just dev           # docker compose up
+just serve         # uvicorn backend only (hot reload, port 8000)
 just test          # backend + frontend tests
 just test-back     # uv run pytest backend/tests/
 just test-front    # npm run test (frontend/)
@@ -115,8 +116,9 @@ Configuration via environment variables — switch provider without touching cod
 
 - Explicit over clever. Descriptive names; no abbreviations.
 - Types/annotations required on all public backend functions.
+- Docstrings required on all public functions and classes — describe what, parameters, and return value.
 - Write tests before or alongside new logic.
-- No comments unless logic is non-obvious.
+- No inline comments unless the *why* is non-obvious (hidden constraint, subtle invariant, workaround). Never describe what the code does.
 - Minimum necessary complexity — three similar lines beats a premature abstraction.
 - No error handling for impossible cases; no features beyond what is requested.
 - No backwards-compatibility shims for code known to be unused.

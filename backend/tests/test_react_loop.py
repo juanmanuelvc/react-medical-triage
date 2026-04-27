@@ -208,3 +208,26 @@ async def test_run_triage_tokens_cached_defaults_to_zero_when_no_details() -> No
         result = await run_triage("Mild cough.", "session-9")
 
     assert result.steps[0].tokens_cached == 0
+
+
+async def test_run_triage_on_step_callback_called_per_step() -> None:
+    ner_resp = _make_tool_call_response("symptom_ner", {"text": "headache"})
+    finish_resp = _make_finish_response()
+    mock_tool = MagicMock()
+    mock_tool.execute = AsyncMock(return_value={"diseases": ["headache"], "chemicals": []})
+
+    collected: list[ReActStep] = []
+
+    async def on_step(step: ReActStep) -> None:
+        collected.append(step)
+
+    with (
+        patch("litellm.acompletion", new=AsyncMock(side_effect=[ner_resp, finish_resp])),
+        patch("agent.react_loop.TOOL_REGISTRY", {"symptom_ner": mock_tool}),
+    ):
+        result = await run_triage("headache", "session-10", on_step=on_step)
+
+    assert len(collected) == 1
+    assert collected[0].step_type == "tool_call"
+    assert collected[0].tool_name == "symptom_ner"
+    assert result.urgency_level == "non_urgent"

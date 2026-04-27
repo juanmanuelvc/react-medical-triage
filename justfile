@@ -4,6 +4,9 @@ dev:
 build:
     docker compose -f infra/docker-compose.yml build
 
+serve:
+    cd backend && uv run uvicorn api.main:app --reload --port 8000
+
 test: test-back test-front
 
 test-back:

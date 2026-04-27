@@ -9,6 +9,7 @@ _nlp: Any = None
 
 
 def _get_nlp() -> Any:
+    """Return the scispaCy NLP model, loading it on first call (lazy singleton)."""
     global _nlp
     if _nlp is None:
         with warnings.catch_warnings():

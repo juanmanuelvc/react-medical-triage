@@ -1,5 +1,6 @@
 import json
 import time
+from collections.abc import Callable, Coroutine
 from dataclasses import dataclass
 from typing import Any
 
@@ -66,6 +67,11 @@ _ESCALATION_RESULT_SUMMARY = "Agent did not call finish within the allowed numbe
 
 @dataclass
 class ReActStep:
+    """A single step produced by the ReAct loop.
+
+    step_type is one of: ``"thought"``, ``"tool_call"``, ``"finish"``.
+    """
+
     step_number: int
     step_type: str  # "thought" | "tool_call" | "finish"
     tool_name: str | None
@@ -80,6 +86,8 @@ class ReActStep:
 
 @dataclass
 class TriageResult:
+    """Final output of the ReAct loop, returned when the agent calls ``finish``."""
+
     session_id: str
     steps: list[ReActStep]
     recommendation: str
@@ -89,11 +97,26 @@ class TriageResult:
     reasoning_summary: str
 
 
-async def run_triage(symptoms_text: str, session_id: str) -> TriageResult:
+async def run_triage(
+    symptoms_text: str,
+    session_id: str,
+    on_step: Callable[[ReActStep], Coroutine[Any, Any, None]] | None = None,
+) -> TriageResult:
     """Run the ReAct triage loop for the given symptom description.
 
     Calls the LLM in a Think→Act→Observe cycle up to MAX_STEPS times.
-    The loop exits when the agent calls `finish` or when MAX_STEPS is exceeded.
+    The loop exits when the agent calls ``finish`` or when MAX_STEPS is exceeded.
+    If MAX_STEPS is exceeded the result escalates to ``urgency_level="immediate"``
+    with ``confidence=0.0`` as a safety fallback.
+
+    Args:
+        symptoms_text: Raw patient-reported symptom text.
+        session_id: UUID that identifies this session in the database.
+        on_step: Optional async callback invoked after each ``thought`` or ``tool_call``
+                 step. Not called for the ``finish`` step.
+
+    Returns:
+        A TriageResult with the agent's recommendation and the full step trace.
     """
     all_tools = [tool.to_openai_schema() for tool in TOOL_REGISTRY.values()]
     all_tools.append(_FINISH_TOOL_SCHEMA)
@@ -128,20 +151,21 @@ async def run_triage(symptoms_text: str, session_id: str) -> TriageResult:
         )
 
         if not msg.tool_calls:
-            steps.append(
-                ReActStep(
-                    step_number=step_num,
-                    step_type="thought",
-                    tool_name=None,
-                    tool_args=None,
-                    tool_result=None,
-                    reasoning=msg.content,
-                    tokens_prompt=tokens_prompt,
-                    tokens_completion=tokens_completion,
-                    tokens_cached=tokens_cached,
-                    latency_ms=latency_ms,
-                )
+            step = ReActStep(
+                step_number=step_num,
+                step_type="thought",
+                tool_name=None,
+                tool_args=None,
+                tool_result=None,
+                reasoning=msg.content,
+                tokens_prompt=tokens_prompt,
+                tokens_completion=tokens_completion,
+                tokens_cached=tokens_cached,
+                latency_ms=latency_ms,
             )
+            steps.append(step)
+            if on_step:
+                await on_step(step)
             break
 
         # Append the assistant turn (with tool_calls) before processing results.
@@ -169,20 +193,19 @@ async def run_triage(symptoms_text: str, session_id: str) -> TriageResult:
             tool_args: dict[str, Any] = json.loads(tc.function.arguments)
 
             if tool_name == "finish":
-                steps.append(
-                    ReActStep(
-                        step_number=step_num,
-                        step_type="finish",
-                        tool_name="finish",
-                        tool_args=tool_args,
-                        tool_result=None,
-                        reasoning=None,
-                        tokens_prompt=tokens_prompt,
-                        tokens_completion=tokens_completion,
-                        tokens_cached=tokens_cached,
-                        latency_ms=latency_ms,
-                    )
+                finish_step = ReActStep(
+                    step_number=step_num,
+                    step_type="finish",
+                    tool_name="finish",
+                    tool_args=tool_args,
+                    tool_result=None,
+                    reasoning=None,
+                    tokens_prompt=tokens_prompt,
+                    tokens_completion=tokens_completion,
+                    tokens_cached=tokens_cached,
+                    latency_ms=latency_ms,
                 )
+                steps.append(finish_step)
                 return TriageResult(
                     session_id=session_id,
                     steps=steps,
@@ -198,20 +221,21 @@ async def run_triage(symptoms_text: str, session_id: str) -> TriageResult:
             else:
                 tool_result = await TOOL_REGISTRY[tool_name].execute(**tool_args)
 
-            steps.append(
-                ReActStep(
-                    step_number=step_num,
-                    step_type="tool_call",
-                    tool_name=tool_name,
-                    tool_args=tool_args,
-                    tool_result=tool_result,
-                    reasoning=None,
-                    tokens_prompt=tokens_prompt,
-                    tokens_completion=tokens_completion,
-                    tokens_cached=tokens_cached,
-                    latency_ms=latency_ms,
-                )
+            tool_step = ReActStep(
+                step_number=step_num,
+                step_type="tool_call",
+                tool_name=tool_name,
+                tool_args=tool_args,
+                tool_result=tool_result,
+                reasoning=None,
+                tokens_prompt=tokens_prompt,
+                tokens_completion=tokens_completion,
+                tokens_cached=tokens_cached,
+                latency_ms=latency_ms,
             )
+            steps.append(tool_step)
+            if on_step:
+                await on_step(tool_step)
             messages.append(
                 {
                     "role": "tool",
