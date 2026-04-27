@@ -67,6 +67,8 @@ _ESCALATION_RESULT_SUMMARY = "Agent did not call finish within the allowed numbe
 
 @dataclass
 class ReActStep:
+    """A single step produced by the ReAct loop — either a thought, a tool call, or the finish call."""
+
     step_number: int
     step_type: str  # "thought" | "tool_call" | "finish"
     tool_name: str | None
@@ -81,6 +83,8 @@ class ReActStep:
 
 @dataclass
 class TriageResult:
+    """Final output of the ReAct loop, returned when the agent calls ``finish``."""
+
     session_id: str
     steps: list[ReActStep]
     recommendation: str
@@ -98,7 +102,18 @@ async def run_triage(
     """Run the ReAct triage loop for the given symptom description.
 
     Calls the LLM in a Think→Act→Observe cycle up to MAX_STEPS times.
-    The loop exits when the agent calls `finish` or when MAX_STEPS is exceeded.
+    The loop exits when the agent calls ``finish`` or when MAX_STEPS is exceeded.
+    If MAX_STEPS is exceeded the result escalates to ``urgency_level="immediate"``
+    with ``confidence=0.0`` as a safety fallback.
+
+    Args:
+        symptoms_text: Raw patient-reported symptom text.
+        session_id: UUID that identifies this session in the database.
+        on_step: Optional async callback invoked after each ``thought`` or ``tool_call``
+                 step. Not called for the ``finish`` step.
+
+    Returns:
+        A TriageResult with the agent's recommendation and the full step trace.
     """
     all_tools = [tool.to_openai_schema() for tool in TOOL_REGISTRY.values()]
     all_tools.append(_FINISH_TOOL_SCHEMA)
