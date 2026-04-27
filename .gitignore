@@ -1,9 +1,6 @@
 # Worktrees
 .worktrees/
 
-# Local development scratchpads
-scratchpad/
-
 # Python
 __pycache__/
 *.py[cod]
