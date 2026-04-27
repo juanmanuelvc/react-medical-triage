@@ -112,3 +112,31 @@ async def test_get_triage_session_not_found(mock_deps: dict[str, Any]) -> None:
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         resp = await client.get("/triage/nonexistent-id")
     assert resp.status_code == 404
+
+
+async def test_get_triage_session_not_complete_returns_404(mock_deps: dict[str, Any]) -> None:
+    mock_deps["in-progress-id"] = {"status": "running", "steps_json": "[]", "result_json": "{}"}
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        resp = await client.get("/triage/in-progress-id")
+    assert resp.status_code == 404
+
+
+async def test_post_triage_exception_emits_error_event(
+    mock_deps: dict[str, Any], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    async def raising_run_triage(
+        symptoms_text: str,
+        session_id: str,
+        on_step: Any = None,
+    ) -> None:
+        raise RuntimeError("LLM unavailable")
+
+    monkeypatch.setattr("api.routes.triage.run_triage", raising_run_triage)
+
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        async with client.stream("POST", "/triage", json={"symptoms": "chest pain"}) as resp:
+            events = await _collect_sse_events(resp)
+
+    assert len(events) == 1
+    assert events[0]["event"] == "error"
+    assert any(s["status"] == "error" for s in mock_deps.values())

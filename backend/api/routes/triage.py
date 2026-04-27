@@ -32,7 +32,9 @@ async def _triage_stream(symptoms: str, session_id: str) -> AsyncGenerator[str, 
     while True:
         item = await queue.get()
         if isinstance(item, BaseException):
-            raise item
+            await update_session(session_id, "[]", "{}", "error")
+            yield f"data: {json.dumps({'event': 'error', 'detail': str(item)})}\n\n"
+            break
         if isinstance(item, ReActStep):
             step_data = ReActStepSchema.from_step(item).model_dump()
             yield f"data: {json.dumps({'event': 'step', 'data': step_data})}\n\n"
@@ -64,6 +66,6 @@ async def post_triage(body: TriageRequest) -> StreamingResponse:
 @router.get("/triage/{session_id}", response_model=TriageResponse)
 async def get_triage(session_id: str) -> TriageResponse:
     row = await get_session(session_id)
-    if row is None:
+    if row is None or row["status"] != "complete":
         raise HTTPException(status_code=404, detail="Session not found")
     return TriageResponse.model_validate_json(row["result_json"])
