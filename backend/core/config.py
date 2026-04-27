@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     llm_api_base: str | None = None
     llm_api_key: str | None = None
 
+    db_path: str = "triage.db"
+
     # OpenTelemetry (used in Phase 4)
     otel_exporter_otlp_endpoint: str = "http://localhost:4317"
     otel_service_name: str = "react-medical-triage"
