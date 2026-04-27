@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.routes.triage import router as triage_router
+from api.routers.triage import router as triage_router
 from db import init_db
 
 

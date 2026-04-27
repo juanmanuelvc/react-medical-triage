@@ -59,10 +59,10 @@ def mock_deps(monkeypatch: pytest.MonkeyPatch) -> dict[str, Any]:
         return sessions.get(session_id)
 
     monkeypatch.setattr("api.main.init_db", fake_init_db)
-    monkeypatch.setattr("api.routes.triage.insert_session", fake_insert)
-    monkeypatch.setattr("api.routes.triage.update_session", fake_update)
-    monkeypatch.setattr("api.routes.triage.get_session", fake_get)
-    monkeypatch.setattr("api.routes.triage.run_triage", _fake_run_triage)
+    monkeypatch.setattr("api.routers.triage.insert_session", fake_insert)
+    monkeypatch.setattr("api.routers.triage.update_session", fake_update)
+    monkeypatch.setattr("api.routers.triage.get_session", fake_get)
+    monkeypatch.setattr("api.routers.triage.run_triage", _fake_run_triage)
     return sessions
 
 
@@ -131,7 +131,7 @@ async def test_post_triage_exception_emits_error_event(
     ) -> None:
         raise RuntimeError("LLM unavailable")
 
-    monkeypatch.setattr("api.routes.triage.run_triage", raising_run_triage)
+    monkeypatch.setattr("api.routers.triage.run_triage", raising_run_triage)
 
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         async with client.stream("POST", "/triage", json={"symptoms": "chest pain"}) as resp:
