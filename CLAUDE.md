@@ -22,6 +22,7 @@ See `PLAN.md` for the phase-by-phase implementation plan. See `STATUS.md` for cu
 
 ```
 just dev           # docker compose up
+just serve         # uvicorn backend only (hot reload, port 8000)
 just test          # backend + frontend tests
 just test-back     # uv run pytest backend/tests/
 just test-front    # npm run test (frontend/)
