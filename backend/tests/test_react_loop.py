@@ -1,6 +1,10 @@
 import json
 from unittest.mock import AsyncMock, MagicMock, patch
 
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
+
 from agent.react_loop import MAX_STEPS, ReActStep, TriageResult, run_triage
 
 # ---------------------------------------------------------------------------
@@ -231,3 +235,41 @@ async def test_run_triage_on_step_callback_called_per_step() -> None:
     assert collected[0].step_type == "tool_call"
     assert collected[0].tool_name == "symptom_ner"
     assert result.urgency_level == "non_urgent"
+
+
+# ---------------------------------------------------------------------------
+# OTel span instrumentation
+# ---------------------------------------------------------------------------
+
+
+async def test_run_triage_emits_one_span_per_step() -> None:
+    """run_triage wraps each ReAct step in an OTel span with the required attributes."""
+    exporter = InMemorySpanExporter()
+    provider = TracerProvider()
+    provider.add_span_processor(SimpleSpanProcessor(exporter))
+
+    ner_resp = _make_tool_call_response("symptom_ner", {"text": "headache"})
+    finish_resp = _make_finish_response(urgency="non_urgent")
+    mock_tool = MagicMock()
+    mock_tool.execute = AsyncMock(return_value={"diseases": ["headache"], "chemicals": []})
+
+    with (
+        patch("litellm.acompletion", new=AsyncMock(side_effect=[ner_resp, finish_resp])),
+        patch("agent.react_loop.TOOL_REGISTRY", {"symptom_ner": mock_tool}),
+        patch("agent.react_loop.get_tracer", return_value=provider.get_tracer("test")),
+    ):
+        result = await run_triage("I have a headache", "session-otel")
+
+    spans = exporter.get_finished_spans()
+    # Expect one span per step: tool_call + finish = 2 steps
+    assert len(spans) == len(result.steps)
+
+    span_names = [s.name for s in spans]
+    assert all(name == "react.step" for name in span_names)
+
+    # Verify required attributes are present on each span
+    required_attrs = {"react.step_number", "react.step_type", "react.tool_name"}
+    for span in spans:
+        assert span.attributes is not None, f"Span {span.name!r} has no attributes"
+        for attr in required_attrs:
+            assert attr in span.attributes, f"Missing attribute {attr!r} on span {span.name!r}"

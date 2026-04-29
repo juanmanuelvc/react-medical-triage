@@ -9,6 +9,7 @@ import litellm
 from agent.prompts import SYSTEM_PROMPT
 from agent.tools import TOOL_REGISTRY
 from core.config import settings
+from tracing.otel import get_tracer
 
 MAX_STEPS: int = 10
 
@@ -127,122 +128,131 @@ async def run_triage(
     ]
     steps: list[ReActStep] = []
 
+    tracer = get_tracer()
+
     for step_num in range(MAX_STEPS):
-        t0 = time.monotonic()
-        # TODO(tracing): wrap in OTel span with react.step_number=step_num
-        response: litellm.ModelResponse = await litellm.acompletion(  # type: ignore[assignment]
-            model=settings.llm_model,
-            messages=messages,
-            tools=all_tools,
-            tool_choice="auto",
-            api_base=settings.llm_api_base,
-            api_key=settings.llm_api_key,
-        )
-        latency_ms = (time.monotonic() - t0) * 1000
+        with tracer.start_as_current_span("react.step") as span:
+            span.set_attribute("react.step_number", step_num)
 
-        msg = response.choices[0].message
-        usage = response.usage  # type: ignore[attr-defined]
-        tokens_prompt: int = usage.prompt_tokens if usage else 0
-        tokens_completion: int = usage.completion_tokens if usage else 0
-        tokens_cached: int = (
-            (usage.prompt_tokens_details.cached_tokens or 0)
-            if usage and usage.prompt_tokens_details
-            else 0
-        )
-
-        if not msg.tool_calls:
-            step = ReActStep(
-                step_number=step_num,
-                step_type="thought",
-                tool_name=None,
-                tool_args=None,
-                tool_result=None,
-                reasoning=msg.content,
-                tokens_prompt=tokens_prompt,
-                tokens_completion=tokens_completion,
-                tokens_cached=tokens_cached,
-                latency_ms=latency_ms,
+            t0 = time.monotonic()
+            response: litellm.ModelResponse = await litellm.acompletion(  # type: ignore[assignment]
+                model=settings.llm_model,
+                messages=messages,
+                tools=all_tools,
+                tool_choice="auto",
+                api_base=settings.llm_api_base,
+                api_key=settings.llm_api_key,
             )
-            steps.append(step)
-            if on_step:
-                await on_step(step)
-            break
+            latency_ms = (time.monotonic() - t0) * 1000
 
-        # Append the assistant turn (with tool_calls) before processing results.
-        # The OpenAI API requires the assistant message to precede all its tool results.
-        messages.append(
-            {
-                "role": "assistant",
-                "content": msg.content,
-                "tool_calls": [
-                    {
-                        "id": tc.id,
-                        "type": "function",
-                        "function": {
-                            "name": tc.function.name,
-                            "arguments": tc.function.arguments,
-                        },
-                    }
-                    for tc in msg.tool_calls
-                ],
-            }
-        )
+            msg = response.choices[0].message
+            usage = response.usage  # type: ignore[attr-defined]
+            tokens_prompt: int = usage.prompt_tokens if usage else 0
+            tokens_completion: int = usage.completion_tokens if usage else 0
+            tokens_cached: int = (
+                (usage.prompt_tokens_details.cached_tokens or 0)
+                if usage and usage.prompt_tokens_details
+                else 0
+            )
 
-        for tc in msg.tool_calls:
-            tool_name = tc.function.name
-            tool_args: dict[str, Any] = json.loads(tc.function.arguments)
-
-            if tool_name == "finish":
-                finish_step = ReActStep(
+            if not msg.tool_calls:
+                step = ReActStep(
                     step_number=step_num,
-                    step_type="finish",
-                    tool_name="finish",
-                    tool_args=tool_args,
+                    step_type="thought",
+                    tool_name=None,
+                    tool_args=None,
                     tool_result=None,
+                    reasoning=msg.content,
+                    tokens_prompt=tokens_prompt,
+                    tokens_completion=tokens_completion,
+                    tokens_cached=tokens_cached,
+                    latency_ms=latency_ms,
+                )
+                steps.append(step)
+                span.set_attribute("react.step_type", "thought")
+                span.set_attribute("react.tool_name", "")
+                if on_step:
+                    await on_step(step)
+                break
+
+            # The OpenAI API requires the assistant message to precede all its tool results.
+            messages.append(
+                {
+                    "role": "assistant",
+                    "content": msg.content,
+                    "tool_calls": [
+                        {
+                            "id": tc.id,
+                            "type": "function",
+                            "function": {
+                                "name": tc.function.name,
+                                "arguments": tc.function.arguments,
+                            },
+                        }
+                        for tc in msg.tool_calls
+                    ],
+                }
+            )
+
+            for tc in msg.tool_calls:
+                tool_name = tc.function.name
+                tool_args: dict[str, Any] = json.loads(tc.function.arguments)
+
+                if tool_name == "finish":
+                    finish_step = ReActStep(
+                        step_number=step_num,
+                        step_type="finish",
+                        tool_name="finish",
+                        tool_args=tool_args,
+                        tool_result=None,
+                        reasoning=None,
+                        tokens_prompt=tokens_prompt,
+                        tokens_completion=tokens_completion,
+                        tokens_cached=tokens_cached,
+                        latency_ms=latency_ms,
+                    )
+                    steps.append(finish_step)
+                    span.set_attribute("react.step_type", "finish")
+                    span.set_attribute("react.tool_name", "finish")
+                    return TriageResult(
+                        session_id=session_id,
+                        steps=steps,
+                        recommendation=tool_args["recommendation"],
+                        urgency_level=tool_args["urgency_level"],
+                        confidence=float(tool_args["confidence"]),
+                        red_flags=tool_args.get("red_flags", []),
+                        reasoning_summary=tool_args["reasoning_summary"],
+                    )
+
+                if tool_name not in TOOL_REGISTRY:
+                    tool_result: dict[str, Any] = {"error": f"unknown tool: {tool_name}"}
+                else:
+                    tool_result = await TOOL_REGISTRY[tool_name].execute(**tool_args)
+
+                tool_step = ReActStep(
+                    step_number=step_num,
+                    step_type="tool_call",
+                    tool_name=tool_name,
+                    tool_args=tool_args,
+                    tool_result=tool_result,
                     reasoning=None,
                     tokens_prompt=tokens_prompt,
                     tokens_completion=tokens_completion,
                     tokens_cached=tokens_cached,
                     latency_ms=latency_ms,
                 )
-                steps.append(finish_step)
-                return TriageResult(
-                    session_id=session_id,
-                    steps=steps,
-                    recommendation=tool_args["recommendation"],
-                    urgency_level=tool_args["urgency_level"],
-                    confidence=float(tool_args["confidence"]),
-                    red_flags=tool_args.get("red_flags", []),
-                    reasoning_summary=tool_args["reasoning_summary"],
+                steps.append(tool_step)
+                span.set_attribute("react.step_type", "tool_call")
+                span.set_attribute("react.tool_name", tool_name or "")
+                if on_step:
+                    await on_step(tool_step)
+                messages.append(
+                    {
+                        "role": "tool",
+                        "tool_call_id": tc.id,
+                        "content": json.dumps(tool_result),
+                    }
                 )
-
-            if tool_name not in TOOL_REGISTRY:
-                tool_result: dict[str, Any] = {"error": f"unknown tool: {tool_name}"}
-            else:
-                tool_result = await TOOL_REGISTRY[tool_name].execute(**tool_args)
-
-            tool_step = ReActStep(
-                step_number=step_num,
-                step_type="tool_call",
-                tool_name=tool_name,
-                tool_args=tool_args,
-                tool_result=tool_result,
-                reasoning=None,
-                tokens_prompt=tokens_prompt,
-                tokens_completion=tokens_completion,
-                tokens_cached=tokens_cached,
-                latency_ms=latency_ms,
-            )
-            steps.append(tool_step)
-            if on_step:
-                await on_step(tool_step)
-            messages.append(
-                {
-                    "role": "tool",
-                    "tool_call_id": tc.id,
-                    "content": json.dumps(tool_result),
-                }
-            )
 
     return TriageResult(
         session_id=session_id,
