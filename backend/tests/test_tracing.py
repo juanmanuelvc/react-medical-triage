@@ -66,7 +66,7 @@ def test_setup_tracing_registers_litellm_callback():
 # ---------------------------------------------------------------------------
 
 
-def test_otel_callback_sets_llm_attributes_on_current_span():
+async def test_otel_callback_sets_llm_attributes_on_current_span():
     """The LiteLLM success callback records llm.* attributes on the active span."""
     from tracing.otel import _OtelLiteLLMCallback
 
@@ -85,7 +85,7 @@ def test_otel_callback_sets_llm_attributes_on_current_span():
     kwargs = {"model": "openai/qwen2.5-0.5B-Instruct"}
 
     with tracer.start_as_current_span("test_span"):
-        callback.log_success_event(kwargs, response_obj, start_time, end_time)
+        await callback.async_log_success_event(kwargs, response_obj, start_time, end_time)
 
     spans = exporter.get_finished_spans()
     assert len(spans) == 1
@@ -97,7 +97,7 @@ def test_otel_callback_sets_llm_attributes_on_current_span():
     assert attrs["llm.latency_ms"] == pytest.approx(1000.0, abs=1.0)
 
 
-def test_otel_callback_noop_when_no_active_span():
+async def test_otel_callback_noop_when_no_active_span():
     """The callback does not crash when there is no active span."""
     from tracing.otel import _OtelLiteLLMCallback
 
@@ -110,7 +110,7 @@ def test_otel_callback_noop_when_no_active_span():
     end_time = datetime.datetime(2024, 1, 1, 0, 0, 1)
 
     # Must not raise even without an active span context.
-    callback.log_success_event(kwargs, response_obj, start_time, end_time)
+    await callback.async_log_success_event(kwargs, response_obj, start_time, end_time)
 
 
 # ---------------------------------------------------------------------------

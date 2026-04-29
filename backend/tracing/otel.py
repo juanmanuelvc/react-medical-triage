@@ -15,7 +15,7 @@ from core.config import settings
 class _OtelLiteLLMCallback(CustomLogger):
     """LiteLLM callback that writes LLM metrics to the active OTel span."""
 
-    def log_success_event(
+    async def async_log_success_event(
         self,
         kwargs: dict,
         response_obj: object,

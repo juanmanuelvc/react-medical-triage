@@ -10,6 +10,7 @@ services:
     environment:
       - LLM_API_BASE=http://vllm:8000/v1
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+      - DB_PATH=/app/data/triage.db
     depends_on:
       - jaeger
     volumes:
@@ -41,7 +42,7 @@ services:
           memory: 4g
 
   jaeger:
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/all-in-one:1.65.0
     ports:
       - "16686:16686"   # Jaeger UI
       - "4317:4317"     # OTLP gRPC
