@@ -1,0 +1,51 @@
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../.env
+    environment:
+      - LLM_API_BASE=http://vllm:8000/v1
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    depends_on:
+      - jaeger
+    volumes:
+      - backend-db:/app/data
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+
+  vllm:
+    build:
+      context: ./vllm
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8000"
+    volumes:
+      - vllm-models:/models
+    # CPU inference is slow; increase timeout if needed.
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"   # Jaeger UI
+      - "4317:4317"     # OTLP gRPC
+
+volumes:
+  backend-db:
+  vllm-models:
