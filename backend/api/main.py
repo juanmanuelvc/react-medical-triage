@@ -6,10 +6,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api.routers.triage import router as triage_router
 from db import init_db
+from tracing.otel import setup_tracing
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    setup_tracing()
     await init_db()
     yield
 
